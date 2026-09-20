@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LKPD Interaktif Bahasa Jepang Bab 1 - A2 / JFT-Basic</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- LOGIN SCREEN -->
+  <div id="loginScreen" class="login-wrap">
+    <div class="login-card">
+      <h1>LKPD Bahasa Jepang Bab 1</h1>
+      <p class="ja">先週、日本に来たばかりです／私の周りの人たち</p>
+      <p>Level: A2 / Persiapan JFT-Basic / LPK</p>
+
+      <div class="role-buttons">
+        <button id="btnRoleStudent" class="role-btn active" onclick="selectRole('student')">
+          Peserta
+        </button>
+        <button id="btnRoleTeacher" class="role-btn" onclick="selectRole('teacher')">
+          Guru
+        </button>
+      </div>
+
+      <form id="studentForm" onsubmit="event.preventDefault(); loginStudent();">
+        <label>
+          Nama Peserta
+          <input type="text" id="loginName" required />
+        </label>
+        <label>
+          Kelas
+          <input type="text" id="loginClass" required />
+        </label>
+        <label>
+          Tanggal
+          <input type="date" id="loginDate" required />
+        </label>
+        <button type="submit">Masuk sebagai Peserta</button>
+      </form>
+
+      <form id="teacherForm" style="display:none;" onsubmit="event.preventDefault(); loginTeacher();">
+        <label>
+          Password Guru
+          <input type="password" id="teacherPassword" required />
+        </label>
+        <button type="submit">Masuk sebagai Guru</button>
+      </form>
+
+      <p id="loginError" class="error"></p>
+    </div>
+  </div>
+
+  <!-- APP -->
+  <div id="app" style="display:none;">
+    <header>
+      <div class="container header-flex">
+        <div>
+          <h1>LKPD Interaktif Bab 1</h1>
+          <p id="userInfo"></p>
+        </div>
+        <div class="header-actions no-print">
+          <button onclick="calculateScore()">Hitung Nilai</button>
+          <button class="secondary" onclick="copyReport()">Salin Laporan</button>
+          <button class="secondary" onclick="window.print()">Cetak / PDF</button>
+          <button class="danger" onclick="logout()">Keluar</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+      <nav id="tabs" class="tabs no-print"></nav>
+      <main id="panels"></main>
+    </div>
+  </div>
+
+  <script src="data-soal.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
