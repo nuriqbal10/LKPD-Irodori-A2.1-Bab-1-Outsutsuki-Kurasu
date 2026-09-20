@@ -249,6 +249,7 @@ function setKirimMsg(kind){ const m=document.getElementById("kirimMsg"); if(!m)r
 
 function kirimKeGuru(){
   if(!SHEET_WEB_APP_URL){ alert("URL pengiriman belum di-set. Guru: tempel URL Web App Apps Script ke SHEET_WEB_APP_URL di script.js, lalu push."); return; }
+  if(getSession().role!=="student"){ alert("Tombol ini untuk peserta. Guru tidak perlu mengirim nilai."); return; }
   if(!lastScores){ alert('Klik "Hitung Nilai" dulu sebelum kirim.'); return; }
   const ssn=getSession();
   const payload={ token:SEND_TOKEN, nama:ssn.name||"", kelas:ssn.kelas||"", tanggal:ssn.date||"",
