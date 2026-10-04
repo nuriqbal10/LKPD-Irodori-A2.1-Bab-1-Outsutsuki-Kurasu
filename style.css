@@ -1,15 +1,19 @@
+/* ========================================================
+   🍎 APPLE CLAYMORPHISM DESIGN SYSTEM FOR LKPD
+   Unified with JP10 Outsutsuki Master Portal
+   ======================================================== */
+
 :root {
-  --primary: #1f6feb;
-  --primary-dark: #154fa8;
-  --bg: #f5f7fb;
+  --primary: #0071e3;
+  --primary-dark: #0051a8;
+  --bg: #f2f3f7;
   --card: #ffffff;
-  --border: #d0d7de;
-  --text: #222;
-  --muted: #667085;
-  --green: #2b8a3e;
-  --red: #c92a2a;
-  --yellow: #fff3cd;
-  --yellow-text: #7a5c00;
+  --border: rgba(255, 255, 255, 0.85);
+  --text: #1d1d1f;
+  --muted: #64748b;
+  --green: #10b981;
+  --red: #ef4444;
+  --yellow: #f59e0b;
 }
 
 * {
@@ -18,10 +22,12 @@
 
 body {
   margin: 0;
-  font-family: "Segoe UI", Meiryo, "Yu Gothic", "Noto Sans JP", Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Plus Jakarta Sans", "Noto Sans JP", sans-serif;
   background: var(--bg);
   color: var(--text);
-  line-height: 1.5;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .container {
@@ -30,15 +36,22 @@ body {
   padding: 0 16px;
 }
 
+/* ==========================================
+   1. APPLE CLAY HEADER & NAVIGATION
+   ========================================== */
 header {
-  background: linear-gradient(135deg, #1f6feb, #0b7285);
-  color: #fff;
-  padding: 20px 0;
-}
-
-header h1 {
-  margin: 0 0 6px;
-  font-size: 1.5rem;
+  background: #ffffff;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 
+    10px 14px 26px rgba(174, 185, 206, 0.32),
+    -8px -8px 20px rgba(255, 255, 255, 0.95),
+    inset 2px 2px 4px rgba(255, 255, 255, 0.9),
+    inset -2px -2px 4px rgba(174, 185, 206, 0.12);
+  color: #1d1d1f;
+  padding: 16px 24px;
+  margin: 16px auto 20px auto;
+  transition: all 0.3s ease;
 }
 
 .header-flex {
@@ -49,45 +62,226 @@ header h1 {
   flex-wrap: wrap;
 }
 
+header h1 {
+  margin: 0 0 4px;
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #1d1d1f;
+}
+
+#userInfo {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #64748b;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #eceef4;
+  padding: 3px 12px;
+  border-radius: 999px;
+}
+
 .header-actions {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+  align-items: center;
 }
 
+/* ==========================================
+   2. CLAY PILL BUTTONS
+   ========================================== */
 button {
   border: none;
-  border-radius: 10px;
-  padding: 10px 14px;
+  border-radius: 9999px;
+  padding: 8px 16px;
   font-family: inherit;
-  font-size: 0.95rem;
+  font-size: 0.82rem;
+  font-weight: 700;
   cursor: pointer;
-  background: var(--primary);
-  color: #fff;
+  background: #ffffff;
+  color: #1d1d1f;
+  box-shadow: 
+    4px 6px 12px rgba(174, 185, 206, 0.3),
+    -4px -4px 10px rgba(255, 255, 255, 0.9),
+    inset 1px 1px 2px rgba(255, 255, 255, 0.9),
+    inset -1px -1px 2px rgba(174, 185, 206, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
 
 button:hover {
-  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 
+    6px 8px 16px rgba(174, 185, 206, 0.4),
+    -6px -6px 14px rgba(255, 255, 255, 1);
 }
 
-button.secondary {
-  background: #495057;
+button:active {
+  transform: scale(0.97);
 }
 
-button.secondary:hover {
-  background: #343a40;
+/* Action button variations */
+button#btnHitung, button.btn-hitung, .btn-primary {
+  background: linear-gradient(135deg, #0071e3, #4338ca) !important;
+  color: #ffffff !important;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 113, 227, 0.35) !important;
 }
 
-button.danger {
-  background: var(--red);
+button#btnSalin, button.btn-salin, button.secondary {
+  background: #ffffff !important;
+  color: #475569 !important;
+  border: 1px solid rgba(203, 213, 225, 0.6) !important;
 }
 
-button.danger:hover {
-  background: #a61e1e;
+button#btnKirim, button.btn-kirim, .btn-success {
+  background: linear-gradient(135deg, #10b981, #059669) !important;
+  color: #ffffff !important;
+  border: none;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35) !important;
 }
 
+button#btnCetak, button.btn-cetak {
+  background: linear-gradient(135deg, #0ea5e9, #0284c7) !important;
+  color: #ffffff !important;
+  border: none;
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.35) !important;
+}
+
+button#btnKeluar, button.btn-keluar, button.danger {
+  background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+  color: #ffffff !important;
+  border: none;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35) !important;
+}
+
+/* ==========================================
+   3. CLAY TABS NAVIGATION
+   ========================================== */
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0 20px;
+  padding: 6px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 9999px;
+  backdrop-filter: blur(8px);
+}
+
+.tab-btn {
+  background: #ffffff;
+  color: #64748b;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 9999px;
+  padding: 8px 16px;
+  font-weight: 700;
+  font-size: 0.82rem;
+  box-shadow: 
+    3px 4px 8px rgba(174, 185, 206, 0.25),
+    -3px -3px 8px rgba(255, 255, 255, 0.9);
+  transition: all 0.25s ease;
+}
+
+.tab-btn:hover {
+  color: #1e293b;
+  transform: translateY(-1px);
+}
+
+.tab-btn.active {
+  background: linear-gradient(135deg, #0071e3, #4338ca) !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 16px rgba(0, 113, 227, 0.35) !important;
+  transform: scale(1.02);
+}
+
+/* ==========================================
+   4. CLAY CARDS & SECTIONS
+   ========================================== */
+.card, .panduan-box, .section, .login-card, .tab-pane, .exercise-box, .audio-box, .materi-card {
+  background: #ffffff;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 
+    10px 14px 26px rgba(174, 185, 206, 0.28),
+    -8px -8px 20px rgba(255, 255, 255, 0.95),
+    inset 2px 2px 4px rgba(255, 255, 255, 0.9),
+    inset -2px -2px 4px rgba(174, 185, 206, 0.12);
+  padding: 24px;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+h2, h3, h4 {
+  font-weight: 800;
+  color: #1d1d1f;
+  letter-spacing: -0.01em;
+}
+
+/* Callout Box (Panduan) */
+.panduan-card, .callout-box, .info-box {
+  background: linear-gradient(145deg, #f8fafc, #f1f5f9);
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 
+    inset 2px 2px 5px rgba(255, 255, 255, 0.9),
+    inset -2px -2px 5px rgba(148, 163, 184, 0.15);
+  padding: 18px;
+  margin-bottom: 16px;
+}
+
+/* ==========================================
+   5. CLAY INSET FORMS & INPUTS
+   ========================================== */
+input[type="text"],
+input[type="date"],
+input[type="password"],
+input[type="number"],
+select,
+textarea {
+  width: 100%;
+  padding: 12px 16px;
+  background: #eceef4;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 16px;
+  box-shadow: 
+    inset 3px 3px 6px rgba(166, 175, 195, 0.28),
+    inset -3px -3px 6px rgba(255, 255, 255, 0.85);
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: #1e293b;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #0071e3;
+  box-shadow: 
+    0 0 0 3px rgba(0, 113, 227, 0.15),
+    inset 2px 2px 4px rgba(166, 175, 195, 0.2);
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #475569;
+}
+
+/* ==========================================
+   6. LOGIN SCREEN
+   ========================================== */
 .login-wrap {
-  min-height: 100vh;
+  min-height: 90vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -96,390 +290,185 @@ button.danger:hover {
 
 .login-card {
   width: 100%;
-  max-width: 520px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 24px;
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  max-width: 480px;
+  padding: 32px;
 }
 
 .login-card h1 {
-  margin: 0 0 8px;
-  color: var(--primary-dark);
+  margin: 0 0 6px;
+  font-size: 1.5rem;
+  color: #1d1d1f;
 }
 
 .role-buttons {
   display: flex;
-  gap: 10px;
-  margin: 16px 0;
+  background: #eceef4;
+  border-radius: 9999px;
+  padding: 4px;
+  gap: 6px;
+  margin: 16px 0 20px;
+  box-shadow: 
+    inset 3px 3px 6px rgba(166, 175, 195, 0.28),
+    inset -3px -3px 6px rgba(255, 255, 255, 0.85);
 }
 
 .role-btn {
   flex: 1;
-  background: #e9ecef;
-  color: #222;
+  border-radius: 9999px;
+  padding: 10px 16px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  background: transparent;
+  color: #64748b;
+  box-shadow: none;
+  border: none;
 }
 
 .role-btn.active {
-  background: var(--primary);
-  color: #fff;
+  background: linear-gradient(135deg, #0071e3, #4338ca) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(0, 113, 227, 0.3) !important;
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-top: 12px;
+/* ==========================================
+   7. THEME OVERRIDES (MATCHING MASTER PORTAL)
+   ========================================== */
+
+/* A. 🌸 THEME SAKURA HARU */
+body.theme-sakura {
+  background: #fff1f4 !important;
+  color: #4c1d28 !important;
+}
+body.theme-sakura header,
+body.theme-sakura .card,
+body.theme-sakura .panduan-box,
+body.theme-sakura .section,
+body.theme-sakura .login-card {
+  background: #ffffff !important;
+  border-color: rgba(254, 205, 211, 0.7) !important;
+  box-shadow: 10px 14px 26px rgba(244, 63, 94, 0.12), -8px -8px 20px rgba(255, 255, 255, 0.95) !important;
+}
+body.theme-sakura header h1,
+body.theme-sakura h2,
+body.theme-sakura h3 {
+  color: #9f1239 !important;
+}
+body.theme-sakura button#btnHitung,
+body.theme-sakura .tab-btn.active,
+body.theme-sakura .role-btn.active {
+  background: linear-gradient(135deg, #f43f5e, #fb7185) !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 16px rgba(244, 63, 94, 0.35) !important;
+}
+body.theme-sakura input,
+body.theme-sakura textarea,
+body.theme-sakura select,
+body.theme-sakura #userInfo,
+body.theme-sakura .role-buttons {
+  background: #ffe4e6 !important;
+  color: #4c1d28 !important;
+  border-color: rgba(254, 205, 211, 0.6) !important;
 }
 
-label {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  font-weight: 600;
+/* B. 🌊 THEME OCEAN KANAGAWA */
+body.theme-ocean {
+  background: #ecfeff !important;
+  color: #164e63 !important;
+}
+body.theme-ocean header,
+body.theme-ocean .card,
+body.theme-ocean .panduan-box,
+body.theme-ocean .section,
+body.theme-ocean .login-card {
+  background: #ffffff !important;
+  border-color: rgba(165, 243, 252, 0.7) !important;
+  box-shadow: 10px 14px 26px rgba(6, 182, 212, 0.12), -8px -8px 20px rgba(255, 255, 255, 0.95) !important;
+}
+body.theme-ocean header h1,
+body.theme-ocean h2,
+body.theme-ocean h3 {
+  color: #0e7490 !important;
+}
+body.theme-ocean button#btnHitung,
+body.theme-ocean .tab-btn.active,
+body.theme-ocean .role-btn.active {
+  background: linear-gradient(135deg, #0891b2, #0ea5e9) !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 16px rgba(8, 145, 178, 0.35) !important;
+}
+body.theme-ocean input,
+body.theme-ocean textarea,
+body.theme-ocean select,
+body.theme-ocean #userInfo,
+body.theme-ocean .role-buttons {
+  background: #cffafe !important;
+  color: #164e63 !important;
+  border-color: rgba(165, 243, 252, 0.6) !important;
 }
 
-input[type="text"],
-input[type="date"],
-input[type="password"],
-select,
-textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  font-family: inherit;
-  font-size: 0.95rem;
-  background: #fff;
+/* C. ⚡ THEME CYBER NIHON */
+body.theme-cyber {
+  background: #0a0a16 !important;
+  color: #e0e7ff !important;
+}
+body.theme-cyber header,
+body.theme-cyber .card,
+body.theme-cyber .panduan-box,
+body.theme-cyber .section,
+body.theme-cyber .login-card {
+  background: #111126 !important;
+  border: 1px solid rgba(168, 85, 247, 0.45) !important;
+  box-shadow: 10px 14px 28px rgba(0, 0, 0, 0.8), 0 0 20px rgba(168, 85, 247, 0.18) !important;
+  color: #e0e7ff !important;
+}
+body.theme-cyber header h1,
+body.theme-cyber h2,
+body.theme-cyber h3 {
+  color: #c084fc !important;
+}
+body.theme-cyber button#btnHitung,
+body.theme-cyber .tab-btn.active,
+body.theme-cyber .role-btn.active {
+  background: linear-gradient(135deg, #9333ea, #6366f1) !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 16px rgba(147, 51, 234, 0.45) !important;
+}
+body.theme-cyber input,
+body.theme-cyber textarea,
+body.theme-cyber select,
+body.theme-cyber #userInfo,
+body.theme-cyber .role-buttons {
+  background: #0a0a1a !important;
+  color: #e0e7ff !important;
+  border-color: rgba(99, 102, 241, 0.3) !important;
 }
 
-textarea {
-  resize: vertical;
+/* D. 🌙 DARK MODE (APPLE OLED) */
+body.dark {
+  background: #0e1015 !important;
+  color: #f5f5f7 !important;
 }
-
-.error {
-  color: var(--red);
-  font-weight: 600;
-  min-height: 24px;
+body.dark header,
+body.dark .card,
+body.dark .panduan-box,
+body.dark .section,
+body.dark .login-card {
+  background: #181b22 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 10px 14px 28px rgba(0, 0, 0, 0.6) !important;
+  color: #f5f5f7 !important;
 }
-
-.tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 16px 0;
+body.dark header h1,
+body.dark h2,
+body.dark h3 {
+  color: #ffffff !important;
 }
-
-.tab-btn {
-  background: #fff;
-  color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  padding: 9px 14px;
-  font-weight: 600;
-}
-
-.tab-btn.active {
-  background: var(--primary);
-  color: #fff;
-  border-color: var(--primary);
-}
-
-.tab-panel {
-  display: none;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 18px;
-  margin-bottom: 18px;
-  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
-}
-
-.tab-panel.active {
-  display: block;
-}
-
-.tab-panel h2 {
-  margin-top: 0;
-  color: var(--primary-dark);
-}
-
-.tab-panel h3 {
-  margin-bottom: 8px;
-}
-
-.note {
-  background: #eef4ff;
-  border-left: 4px solid var(--primary);
-  padding: 12px;
-  border-radius: 10px;
-  margin: 12px 0;
-}
-
-.warning {
-  background: var(--yellow);
-  color: var(--yellow-text);
-  border-left: 4px solid #f59f00;
-  padding: 12px;
-  border-radius: 10px;
-  margin: 12px 0;
-}
-
-.question-card {
-  border: 1px solid #e5e7eb;
-  border-radius: 14px;
-  padding: 14px;
-  margin: 14px 0;
-  background: #fff;
-}
-
-.passage {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 10px;
-  padding: 12px;
-  margin-bottom: 10px;
-}
-
-.options label {
-  display: block;
-  margin: 6px 0;
-  padding: 9px 10px;
-  border: 1px solid transparent;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-.options label:hover {
-  background: #f3f6ff;
-  border-color: #dbe4ff;
-}
-
-input[type="radio"] {
-  margin-right: 8px;
-}
-
-.ja {
-  font-family: Meiryo, "Yu Gothic", "Noto Sans JP", "MS PGothic", sans-serif;
-}
-
-.small {
-  font-size: 0.9rem;
-  color: var(--muted);
-}
-
-.play-btn {
-  background: #0b7285;
-  margin-bottom: 10px;
-}
-
-.play-btn:hover {
-  background: #095c6b;
-}
-
-.teacher-only {
-  display: none;
-}
-
-body.teacher .teacher-only {
-  display: block;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 12px 0;
-  background: #fff;
-}
-
-th,
-td {
-  border: 1px solid #dee2e6;
-  padding: 9px 10px;
-  text-align: left;
-  vertical-align: top;
-}
-
-th {
-  background: #f1f3f5;
-  font-weight: 700;
-}
-
-.result-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 12px;
-  margin: 14px 0;
-}
-
-.result-item {
-  border: 1px solid #e5e7eb;
-  border-radius: 14px;
-  padding: 14px;
-  background: #fafbff;
-}
-
-.result-item strong {
-  display: block;
-  margin-bottom: 6px;
-  color: var(--primary-dark);
-}
-
-.status-box {
-  padding: 14px;
-  border-radius: 14px;
-  font-weight: 700;
-  margin: 14px 0;
-  text-align: center;
-  font-size: 1.05rem;
-}
-
-.status-pass {
-  background: #d3f9d8;
-  color: var(--green);
-  border: 1px solid #8ce99a;
-}
-
-.status-fail {
-  background: #ffe3e3;
-  color: var(--red);
-  border: 1px solid #ffa8a8;
-}
-
-.status-pending {
-  background: #fff3cd;
-  color: #7a5c00;
-  border: 1px solid #ffe08a;
-}
-
-details {
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  padding: 10px 12px;
-  margin: 10px 0;
-  background: #fcfcfd;
-}
-
-summary {
-  cursor: pointer;
-  font-weight: 600;
-  color: var(--primary-dark);
-}
-
-@page {
-  size: A4 portrait;
-  margin: 12mm 10mm 12mm 10mm;
-}
-
-@media print {
-  * {
-    animation: none !important;
-    transition: none !important;
-    opacity: 1 !important;
-    box-shadow: none !important;
-  }
-
-  body {
-    background: #fff !important;
-    color: #000 !important;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-  }
-
-  header {
-    display: block !important;
-    background: #fff !important;
-    color: #000 !important;
-    border-bottom: 2px solid #000 !important;
-    margin-bottom: 15px !important;
-    padding: 10px 0 !important;
-  }
-
-  #userInfo {
-    display: block !important;
-    color: #0f172a !important;
-    font-size: 11pt !important;
-    font-weight: 600 !important;
-    margin: 4px 0 0 !important;
-  }
-
-  .no-print,
-  .tabs,
-  .header-actions,
-  .play-btn,
-  audio,
-  button,
-  #loginScreen {
-    display: none !important;
-  }
-
-  #app {
-    display: block !important;
-    width: 100% !important;
-  }
-
-  /* KONDISI 1: Cetak Tab Hasil Saja jika Tab Hasil Aktif */
-  body:has(#panel-hasil.active) .tab-panel:not(#panel-hasil) {
-    display: none !important;
-  }
-  body:has(#panel-hasil.active) #panel-hasil {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    border: none !important;
-  }
-
-  /* KONDISI 2: Cetak Lembar Soal Lengkap jika bukan Tab Hasil */
-  body:not(:has(#panel-hasil.active)) .tab-panel {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    box-shadow: none !important;
-    border: none !important;
-    margin-bottom: 20px !important;
-  }
-
-  #panel-bankaudio,
-  #panel-panduan {
-    display: none !important;
-  }
-
-  .question-card {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
-    border: 1px solid #cbd5e1 !important;
-    box-shadow: none !important;
-    margin-bottom: 12px !important;
-    padding: 10px 14px !important;
-  }
-
-  .result-grid {
-    display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important;
-    gap: 8px !important;
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
-  }
-
-  .result-item, .status-box, .note {
-    border: 1px solid #cbd5e1 !important;
-    background: #f8fafc !important;
-    box-shadow: none !important;
-  }
-
-  body.teacher .teacher-only {
-    display: block !important;
-  }
-
-  .container {
-    max-width: 100% !important;
-    width: 100% !important;
-    padding: 0 !important;
-  }
+body.dark input,
+body.dark textarea,
+body.dark select,
+body.dark #userInfo,
+body.dark .role-buttons {
+  background: #111318 !important;
+  color: #f5f5f7 !important;
+  border-color: rgba(255, 255, 255, 0.06) !important;
 }
