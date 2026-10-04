@@ -14,7 +14,7 @@ const LISTENING_PLAY_COUNT = Number(SETTINGS.listeningPlayCount || 2);
 const SHOW_LISTENING_CONTROLS = SETTINGS.showListeningControls === true;
 
 /* ===== PENGIRIMAN NILAI (isi ini) ===== */
-const SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbydBVyG6aZOK5BqTHFKpc1tM0I9OfSyAoDY1qXVCMuJli0ie6FqIHw6l6McmCnpxVxo/exec";                 // <-- Web App Router Apps Script
+const SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbydufvt6cBNIKrclA71S1Vwlq_SlKl52D1OmhWi0VWGKnKsrXcoe4iOWt5hufj1K4zk/exec";                 // <-- tempel URL Web App Apps Script
 const SEND_TOKEN = "LPKb1-7x9q-2026z";    // <-- sama dgn ACCESS_TOKEN di Code.gs
 const HASH_SALT = "lkpd_bab1::v1::";
 /* ====================================== */
