@@ -296,7 +296,7 @@ function kirimKeGuru(){
 
   const ssn=getSession();
   const rawBab = SETTINGS.babId || "bab1";
-  const sheetName = "Hasil Bab 1";
+  const sheetName = "Nilai Bab 1";
   const payload={ 
     token:SEND_TOKEN, 
     babId: rawBab,
