@@ -367,30 +367,110 @@ summary {
   color: var(--primary-dark);
 }
 
+@page {
+  size: A4 portrait;
+  margin: 12mm 10mm 12mm 10mm;
+}
+
 @media print {
+  * {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    box-shadow: none !important;
+  }
+
   body {
-    background: #fff;
+    background: #fff !important;
+    color: #000 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
   header {
-    background: #fff;
-    color: #000;
-    border-bottom: 2px solid #000;
+    display: block !important;
+    background: #fff !important;
+    color: #000 !important;
+    border-bottom: 2px solid #000 !important;
+    margin-bottom: 15px !important;
+    padding: 10px 0 !important;
+  }
+
+  #userInfo {
+    display: block !important;
+    color: #0f172a !important;
+    font-size: 11pt !important;
+    font-weight: 600 !important;
+    margin: 4px 0 0 !important;
   }
 
   .no-print,
   .tabs,
   .header-actions,
-  .play-btn {
+  .play-btn,
+  audio,
+  button,
+  #loginScreen {
     display: none !important;
   }
 
-  .tab-panel {
+  #app {
     display: block !important;
-    break-inside: avoid;
-    box-shadow: none;
-    border: 1px solid #999;
-    margin-bottom: 14px;
+    width: 100% !important;
+  }
+
+  /* KONDISI 1: Cetak Tab Hasil Saja jika Tab Hasil Aktif */
+  body:has(#panel-hasil.active) .tab-panel:not(#panel-hasil) {
+    display: none !important;
+  }
+  body:has(#panel-hasil.active) #panel-hasil {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+  }
+
+  /* KONDISI 2: Cetak Lembar Soal Lengkap jika bukan Tab Hasil */
+  body:not(:has(#panel-hasil.active)) .tab-panel {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    box-shadow: none !important;
+    border: none !important;
+    margin-bottom: 20px !important;
+  }
+
+  #panel-bankaudio,
+  #panel-panduan {
+    display: none !important;
+  }
+
+  .question-card {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: none !important;
+    margin-bottom: 12px !important;
+    padding: 10px 14px !important;
+  }
+
+  .result-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 8px !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  .result-item, .status-box, .note {
+    border: 1px solid #cbd5e1 !important;
+    background: #f8fafc !important;
+    box-shadow: none !important;
   }
 
   body.teacher .teacher-only {
@@ -398,6 +478,8 @@ summary {
   }
 
   .container {
-    max-width: 100%;
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 0 !important;
   }
 }

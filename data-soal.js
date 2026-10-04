@@ -1,9 +1,11 @@
 window.LKPD_DATA = {
 settings: {
+    teacherPasswordHash: "f096c22242ddba39a3eb2d2d26ea09deb69ca1cb0989b0c75fe32e1fb8837c60",
     sessionKey: "lkpd_bab1_session_v4",  // v3: struktur listening berubah → jawaban lama tidak terbawa
     stateKey:   "lkpd_bab1_state_v4",
     listeningPlayCount: 2,               // audio asli diputar otomatis 2x (standar JFT/聴解)
-    showListeningControls: false         // false = ujian (siswa tak bisa ulang sendiri); true = latihan
+    showListeningControls: false,        // false = ujian (siswa tak bisa ulang sendiri); true = latihan
+    babId: "bab1"
 },
 
   tabs: [

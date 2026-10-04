@@ -14,7 +14,7 @@ const LISTENING_PLAY_COUNT = Number(SETTINGS.listeningPlayCount || 2);
 const SHOW_LISTENING_CONTROLS = SETTINGS.showListeningControls === true;
 
 /* ===== PENGIRIMAN NILAI (isi ini) ===== */
-const SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbydufvt6cBNIKrclA71S1Vwlq_SlKl52D1OmhWi0VWGKnKsrXcoe4iOWt5hufj1K4zk/exec";                 // <-- tempel URL Web App Apps Script
+const SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbydBVyG6aZOK5BqTHFKpc1tM0I9OfSyAoDY1qXVCMuJli0ie6FqIHw6l6McmCnpxVxo/exec";                 // <-- Web App Router Apps Script
 const SEND_TOKEN = "LPKb1-7x9q-2026z";    // <-- sama dgn ACCESS_TOKEN di Code.gs
 const HASH_SALT = "lkpd_bab1::v1::";
 /* ====================================== */
@@ -49,6 +49,27 @@ window.generateTeacherHash = async function(pw){
 function init(){
   setDefaultDate(); attachGlobalListeners();
   if(!DATA.tabs || DATA.tabs.length===0){ alert("Data LKPD tidak ditemukan. Pastikan data-soal.js dimuat sebelum script.js."); return; }
+
+  // Auto-login jika parameter name/class/date dikirim dari URL dashboard
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    const pName = urlParams.get('name');
+    const pClass = urlParams.get('class') || urlParams.get('kelas');
+    const pDate = urlParams.get('date') || urlParams.get('tanggal');
+    if (pName) {
+      const s = {
+        role: "student",
+        name: pName,
+        kelas: pClass || "A2.1",
+        date: pDate || new Date().toISOString().slice(0, 10)
+      };
+      safeSetItem(SESSION_KEY, JSON.stringify(s));
+      currentRole = "student";
+      showApp(s);
+      return;
+    }
+  } catch(e) { console.warn("Param parse error:", e); }
+
   const raw = safeGetItem(SESSION_KEY);
   if(raw){ try{ const s=JSON.parse(raw); currentRole=s.role; showApp(s); return; }catch(e){ safeRemoveItem(SESSION_KEY); } }
   showLogin();
@@ -120,7 +141,8 @@ function resultHTML(){
     '</div>'+
     '<div id="statusBox" class="status-box" style="display:none;"></div>'+
     '<div style="margin:14px 0;display:flex;gap:10px;align-items:center;flex-wrap:wrap;">'+
-      '<button id="btnKirim" style="background:#2b8a3e;color:#fff;border:none;border-radius:10px;padding:10px 14px;cursor:pointer;font-family:inherit;font-size:.95rem;" onclick="kirimKeGuru()">Kirim Nilai ke Guru</button>'+
+      '<button id="btnKirim" style="background:#2b8a3e;color:#fff;border:none;border-radius:10px;padding:10px 14px;cursor:pointer;font-family:inherit;font-size:.95rem;font-weight:bold;" onclick="kirimKeGuru()">Kirim Nilai ke Guru</button>'+
+      '<button type="button" class="no-print" style="background:#0284c7;color:#fff;border:none;border-radius:10px;padding:10px 14px;cursor:pointer;font-family:inherit;font-size:.95rem;font-weight:bold;" onclick="window.print()">🖨️ Cetak / Simpan PDF</button>'+
       '<span id="kirimMsg" class="small"></span>'+
     '</div>'+
     '<h3>Umpan Balik Diagnostik</h3><div id="diagnosticBox" class="note">Belum ada hasil. Silakan klik Hitung Nilai.</div>'+
@@ -251,18 +273,52 @@ function kirimKeGuru(){
   if(!SHEET_WEB_APP_URL){ alert("URL pengiriman belum di-set. Guru: tempel URL Web App Apps Script ke SHEET_WEB_APP_URL di script.js, lalu push."); return; }
   if(getSession().role!=="student"){ alert("Tombol ini untuk peserta. Guru tidak perlu mengirim nilai."); return; }
   if(!lastScores){ alert('Klik "Hitung Nilai" dulu sebelum kirim.'); return; }
+  
+  // === AMBIL SEMUA TEKS JAWABAN DARI FORM ===
+  const jawabanKosakata = {};
+  const jawabanTerjemahan = {};
+  
+  const kosakataTab = findTab("kosakata");
+  if (kosakataTab && kosakataTab.items) {
+    kosakataTab.items.forEach(function(item) {
+      const el = document.getElementById(item.id);
+      if (el) jawabanKosakata[item.number] = el.value.trim();
+    });
+  }
+  
+  const terjemahanTab = findTab("terjemahan");
+  if (terjemahanTab && terjemahanTab.items) {
+    terjemahanTab.items.forEach(function(item) {
+      const el = document.getElementById(item.id);
+      if (el) jawabanTerjemahan[item.number] = el.value.trim();
+    });
+  }
+
   const ssn=getSession();
-  const payload={ token:SEND_TOKEN, nama:ssn.name||"", kelas:ssn.kelas||"", tanggal:ssn.date||"",
+  const rawBab = SETTINGS.babId || "bab1";
+  const sheetName = "Hasil Bab 1";
+  const payload={ 
+    token:SEND_TOKEN, 
+    babId: rawBab,
+    sheetName: sheetName,
+    nama:ssn.name||"", 
+    kelas:ssn.kelas||"", 
+    tanggal:ssn.date||"",
+    uji: "LKPD " + rawBab.toUpperCase(),
     moji:lastScores.moji.correct, kaiwa:lastScores.kaiwa.correct, choikai:lastScores.choikai.correct, dokkai:lastScores.dokkai.correct,
     rawJFT:lastScores.rawJFT, totalJFT:lastScores.totalJFT, ujianBabNilai:round1(lastScores.ujianBabNilai),
     kanjiBenar:lastScores.kanji.correct, kanjiNilai:round1(lastScores.kanjiNilai),
     kosakataBenar:lastScores.kosakataCorrect, kosakataNilai:round1(lastScores.kosakataNilai),
     trSum:lastScores.trSum, trMax:lastScores.trMax, terjemahanNilai:round1(lastScores.terjemahanNilai),
     finalNilai:round1(lastScores.finalNilai), jftLikeScale:round1(lastScores.jftLikeScale),
-    status:lastScores.statusText, weaknesses:lastWeaknesses.join(", ") };
+    status:lastScores.statusText, weaknesses:lastWeaknesses.join(", "),
+    jawabanKosakata: JSON.stringify(jawabanKosakata),
+    jawabanTerjemahan: JSON.stringify(jawabanTerjemahan)
+  };
   const btn=document.getElementById("btnKirim"); if(btn){btn.disabled=true;btn.textContent="Mengirim…";} setKirimMsg("");
+  const baseUrl = SHEET_WEB_APP_URL.split('?')[0];
   const qs=new URLSearchParams(payload).toString();
-  fetch(SHEET_WEB_APP_URL+"?"+qs,{method:"GET",mode:"no-cors"})
+  fetch(baseUrl+"?"+qs,{method:"GET",mode:"no-cors"})
     .then(function(){ setKirimMsg("ok"); })
     .catch(function(){ setKirimMsg("err"); })
     .finally(function(){ if(btn){btn.disabled=false;btn.textContent="Kirim Nilai ke Guru";} });
@@ -283,3 +339,17 @@ function playTts(text,btn,times){ if(!("speechSynthesis"in window)){alert("Brows
 /* ================= START ================= */
 document.addEventListener("DOMContentLoaded",init);
 if("speechSynthesis"in window)window.speechSynthesis.onvoiceschanged=function(){};
+
+// Penanganan Cetak: Pastikan konten ter-render jika pengguna langsung mencetak sebelum login
+window.addEventListener("beforeprint", function(){
+  if(!currentRole){
+    const ssn = getSession();
+    const s = {
+      role: ssn.role || "student",
+      name: ssn.name || "................................................",
+      kelas: ssn.kelas || "................",
+      date: ssn.date || new Date().toISOString().slice(0, 10)
+    };
+    showApp(s);
+  }
+});
