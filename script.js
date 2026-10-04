@@ -102,7 +102,16 @@ function renderTabs(){
     panelsEl.appendChild(section);
   });
 }
-function openTab(tabId,btn){ document.querySelectorAll(".tab-panel").forEach(el=>el.classList.remove("active")); document.querySelectorAll(".tab-btn").forEach(el=>el.classList.remove("active")); const p=document.getElementById("panel-"+tabId); if(p)p.classList.add("active"); if(btn)btn.classList.add("active"); }
+function openTab(tabId, btn) {
+  document.querySelectorAll(".tab-panel").forEach(el => el.classList.remove("active"));
+  document.querySelectorAll(".tab-btn").forEach(el => el.classList.remove("active"));
+  const p = document.getElementById("panel-" + tabId);
+  if (p) p.classList.add("active");
+  if (btn) {
+    btn.classList.add("active");
+    try { btn.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" }); } catch(e) {}
+  }
+}
 
 function renderItem(item){
   let html='<div class="question-card">';
@@ -353,3 +362,20 @@ window.addEventListener("beforeprint", function(){
     showApp(s);
   }
 });
+
+// Sync theme from parent JP10 Portal
+window.addEventListener('message', function(e) {
+  if (e.data && e.data.type === 'JP10_THEME_SYNC') {
+    document.body.classList.remove('theme-sakura', 'theme-ocean', 'theme-cyber', 'theme-clay-apple');
+    if (e.data.theme) document.body.classList.add('theme-' + e.data.theme);
+    if (e.data.isDark) document.body.classList.add('dark');
+    else document.body.classList.remove('dark');
+  }
+});
+
+// Request initial theme from parent portal
+try {
+  if (window.parent && window.parent !== window) {
+    window.parent.postMessage({ type: 'JP10_REQUEST_THEME' }, '*');
+  }
+} catch(e) {}
