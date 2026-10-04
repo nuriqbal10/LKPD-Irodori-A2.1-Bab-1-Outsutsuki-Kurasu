@@ -177,7 +177,8 @@ function setText(id,t){ const e=document.getElementById(id); if(e)e.textContent=
 function setHTML(id,h){ const e=document.getElementById(id); if(e)e.innerHTML=h; }
 function minRequired(total){ return total?Math.ceil(total*0.6):0; }
 function round1(v){ return Math.round(Number(v)*10)/10; }
-function getSession(){ let s={}; try{s=JSON.parse(safeGetItem(SESSION_KEY)||"{}");}catch(e){s={};} return s; }
+function getSession(){ let s={}; try{s=JSON.parse(safeGetItem(SESSION_KEY)||"{}");}catch(e){s={};  syncAllRadioSelectedStates();
+} return s; }
 
 /* ================= SCORING ================= */
 function sectionResult(sectionId){ const tab=findTab(sectionId); if(!tab||!tab.items)return{correct:0,total:0,percent:0}; let c=0; tab.items.forEach(function(item){ if(getRadio(item.id)===item.answer)c++; }); const t=tab.items.length; return {correct:c,total:t,percent:t?(c/t)*100:0}; }
@@ -379,3 +380,35 @@ try {
     window.parent.postMessage({ type: 'JP10_REQUEST_THEME' }, '*');
   }
 } catch(e) {}
+
+
+/* ================= RADIO SELECTION INTERACTIVE STATE ================= */
+function updateRadioSelection(radioEl) {
+  if (!radioEl || !radioEl.name) return;
+  document.querySelectorAll('input[type="radio"][name="' + radioEl.name + '"]').forEach(function(r) {
+    const lbl = r.closest('label');
+    if (lbl) {
+      if (r.checked) lbl.classList.add('selected');
+      else lbl.classList.remove('selected');
+    }
+  });
+}
+
+function syncAllRadioSelectedStates() {
+  document.querySelectorAll('input[type="radio"]').forEach(function(r) {
+    const lbl = r.closest('label');
+    if (lbl) {
+      if (r.checked) lbl.classList.add('selected');
+      else lbl.classList.remove('selected');
+    }
+  });
+}
+
+if (!window.__radioSelectionListenerAttached) {
+  window.__radioSelectionListenerAttached = true;
+  document.addEventListener('change', function(e) {
+    if (e.target && e.target.type === 'radio') {
+      updateRadioSelection(e.target);
+    }
+  });
+}

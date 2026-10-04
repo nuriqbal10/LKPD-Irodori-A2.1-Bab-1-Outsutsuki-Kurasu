@@ -2,8 +2,9 @@
    🍎 APPLE CLAYMORPHISM DESIGN SYSTEM FOR LKPD
    Unified with JP10 Outsutsuki Master Portal
    Features:
-   - Sticky Frozen Header (top: 0) & Sticky Tab Bar (top: 60px)
+   - Sticky Frozen Header (top: 0) & Sticky Tab Bar (top: 58px)
    - Tab Switching: .tab-panel { display: none; } & .tab-panel.active { display: block; }
+   - Precision Interactive Question Option Cards (Turns Green on Select)
    - Full Question, Audio Player, Table, and Diagnostic Styles
    - 4 Dynamic Themes: Sakura Haru, Ocean Kanagawa, Cyber Nihon, Apple Clay
    - Native Dark Mode (Apple OLED)
@@ -23,6 +24,8 @@
   --muted: #64748b;
   --green: #10b981;
   --green-dark: #059669;
+  --green-bg: #ecfdf5;
+  --green-border: #10b981;
   --red: #ef4444;
   --red-dark: #dc2626;
   --yellow: #f59e0b;
@@ -305,7 +308,7 @@ button#btnKeluar, button.btn-keluar, button.danger, button[onclick*="logout"] {
 }
 
 /* ==========================================
-   5. QUESTIONS, PASSAGES & FORM INPUTS
+   5. QUESTIONS, PASSAGES & PRECISION OPTION BUTTONS
    ========================================== */
 .question-card {
   background: #ffffff;
@@ -314,8 +317,8 @@ button#btnKeluar, button.btn-keluar, button.danger, button[onclick*="logout"] {
   box-shadow: 
     4px 6px 14px rgba(174, 185, 206, 0.16),
     -3px -3px 8px rgba(255, 255, 255, 0.95);
-  padding: 20px;
-  margin: 16px 0;
+  padding: 22px;
+  margin: 18px 0;
   transition: all 0.25s ease;
 }
 
@@ -338,45 +341,151 @@ button#btnKeluar, button.btn-keluar, button.danger, button[onclick*="logout"] {
 }
 
 .prompt {
-  font-size: 0.95rem;
-  margin-bottom: 12px;
-  color: #1e293b;
-}
-
-.options label {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 8px 0;
-  padding: 10px 14px;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-size: 0.92rem;
-  color: #1e293b;
-}
-
-.options label:hover {
-  background: #eff6ff;
-  border-color: #93c5fd;
-  transform: translateX(3px);
-}
-
-.options label:has(input[type="radio"]:checked) {
-  background: #eff6ff;
-  border-color: #0071e3;
-  color: #0071e3;
+  font-size: 1rem;
   font-weight: 700;
-  box-shadow: 0 2px 8px rgba(0, 113, 227, 0.15);
+  margin-bottom: 14px;
+  color: #1e293b;
+  line-height: 1.6;
 }
 
-input[type="radio"] {
-  accent-color: #0071e3;
-  cursor: pointer;
+/* --- PRECISION INTERACTIVE CHOICE BUTTONS --- */
+.options,
+.options-grid {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  margin: 14px 0 16px !important;
+  width: 100% !important;
 }
 
+/* Option Button Card */
+.options label,
+.options-grid label,
+.option-label {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 14px !important;
+  padding: 13px 18px !important;
+  margin: 0 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  background: #ffffff !important;
+  border: 2px solid #e2e8f0 !important;
+  border-radius: 16px !important;
+  cursor: pointer !important;
+  font-size: 0.96rem !important;
+  font-weight: 500 !important;
+  color: #1e293b !important;
+  line-height: 1.5 !important;
+  box-shadow: 
+    0 2px 6px rgba(174, 185, 206, 0.18),
+    inset 0 1px 2px rgba(255, 255, 255, 0.9) !important;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  user-select: none !important;
+  text-align: left !important;
+  position: relative !important;
+}
+
+/* Hover State */
+.options label:hover,
+.options-grid label:hover,
+.option-label:hover {
+  border-color: #10b981 !important;
+  background: #f0fdf4 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 
+    0 6px 16px rgba(16, 185, 129, 0.2),
+    inset 0 1px 2px rgba(255, 255, 255, 1) !important;
+}
+
+/* ACTIVE / SELECTED STATE: TURNS GREEN */
+.options label:has(input[type="radio"]:checked),
+.options-grid label:has(input[type="radio"]:checked),
+.option-label:has(input[type="radio"]:checked),
+.options label.selected,
+.options-grid label.selected,
+.option-label.selected {
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%) !important;
+  border-color: #10b981 !important;
+  color: #065f46 !important;
+  font-weight: 700 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 
+    0 8px 20px rgba(16, 185, 129, 0.28),
+    0 2px 6px rgba(5, 150, 105, 0.15),
+    inset 0 1px 3px rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Modern Circular Radio Check Indicator */
+.options input[type="radio"],
+.options-grid input[type="radio"],
+.option-label input[type="radio"] {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  width: 22px !important;
+  height: 22px !important;
+  min-width: 22px !important;
+  min-height: 22px !important;
+  max-width: 22px !important;
+  max-height: 22px !important;
+  border: 2px solid #94a3b8 !important;
+  border-radius: 50% !important;
+  outline: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  cursor: pointer !important;
+  display: grid !important;
+  place-content: center !important;
+  background: #ffffff !important;
+  box-shadow: inset 1px 1px 3px rgba(148, 163, 184, 0.2) !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  position: relative !important;
+  flex-shrink: 0 !important;
+}
+
+.options input[type="radio"]::before,
+.options-grid input[type="radio"]::before,
+.option-label input[type="radio"]::before {
+  content: "" !important;
+  width: 10px !important;
+  height: 10px !important;
+  border-radius: 50% !important;
+  transform: scale(0) !important;
+  transition: 0.2s transform cubic-bezier(0.16, 1, 0.3, 1) !important;
+  background: #ffffff !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15) !important;
+}
+
+.options input[type="radio"]:checked,
+.options-grid input[type="radio"]:checked,
+.option-label input[type="radio"]:checked {
+  background: #10b981 !important;
+  border-color: #059669 !important;
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.22) !important;
+}
+
+.options input[type="radio"]:checked::before,
+.options-grid input[type="radio"]:checked::before,
+.option-label input[type="radio"]:checked::before {
+  transform: scale(1) !important;
+}
+
+/* Option Text Alignment */
+.options label span,
+.options-grid label span,
+.option-label span,
+.option-text {
+  flex: 1 1 auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  text-align: left !important;
+  line-height: 1.6 !important;
+  word-break: break-word !important;
+}
+
+/* Form Inputs (Non-Options) */
 input[type="text"],
 input[type="date"],
 input[type="password"],
@@ -405,7 +514,9 @@ input:focus, select:focus, textarea:focus {
     inset 2px 2px 4px rgba(166, 175, 195, 0.2);
 }
 
-label {
+/* Form Labels (Excluding Options) */
+form label,
+.login-card label {
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -635,13 +746,27 @@ body.theme-sakura .passage {
   background: #ffffff !important;
   border-color: #fda4af !important;
 }
-body.theme-sakura .options label {
+body.theme-sakura .options label,
+body.theme-sakura .options-grid label,
+body.theme-sakura .option-label {
   background: #ffffff !important;
   border-color: #fecdd3 !important;
+  color: #4c1d28 !important;
 }
-body.theme-sakura .options label:hover {
-  background: #ffe4e6 !important;
-  border-color: #fb7185 !important;
+body.theme-sakura .options label:hover,
+body.theme-sakura .options-grid label:hover,
+body.theme-sakura .option-label:hover {
+  background: #fff0f3 !important;
+  border-color: #10b981 !important;
+}
+body.theme-sakura .options label:has(input[type="radio"]:checked),
+body.theme-sakura .options-grid label:has(input[type="radio"]:checked),
+body.theme-sakura .option-label:has(input[type="radio"]:checked),
+body.theme-sakura .option-label.selected {
+  background: linear-gradient(135deg, #ecfdf5, #d1fae5) !important;
+  border-color: #10b981 !important;
+  color: #065f46 !important;
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.28) !important;
 }
 body.theme-sakura header h1,
 body.theme-sakura h2,
@@ -698,13 +823,27 @@ body.theme-ocean .passage {
   background: #ffffff !important;
   border-color: #67e8f9 !important;
 }
-body.theme-ocean .options label {
+body.theme-ocean .options label,
+body.theme-ocean .options-grid label,
+body.theme-ocean .option-label {
   background: #ffffff !important;
   border-color: #cffafe !important;
+  color: #164e63 !important;
 }
-body.theme-ocean .options label:hover {
-  background: #cffafe !important;
-  border-color: #22d3ee !important;
+body.theme-ocean .options label:hover,
+body.theme-ocean .options-grid label:hover,
+body.theme-ocean .option-label:hover {
+  background: #e6fffa !important;
+  border-color: #10b981 !important;
+}
+body.theme-ocean .options label:has(input[type="radio"]:checked),
+body.theme-ocean .options-grid label:has(input[type="radio"]:checked),
+body.theme-ocean .option-label:has(input[type="radio"]:checked),
+body.theme-ocean .option-label.selected {
+  background: linear-gradient(135deg, #ecfdf5, #d1fae5) !important;
+  border-color: #10b981 !important;
+  color: #065f46 !important;
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.28) !important;
 }
 body.theme-ocean header h1,
 body.theme-ocean h2,
@@ -764,14 +903,33 @@ body.theme-cyber .passage {
   border-color: rgba(168, 85, 247, 0.4) !important;
   color: #f3e8ff !important;
 }
-body.theme-cyber .options label {
+body.theme-cyber .options label,
+body.theme-cyber .options-grid label,
+body.theme-cyber .option-label {
   background: #161633 !important;
-  border-color: rgba(168, 85, 247, 0.25) !important;
+  border-color: rgba(168, 85, 247, 0.28) !important;
   color: #e0e7ff !important;
 }
-body.theme-cyber .options label:hover {
-  background: #271e4d !important;
-  border-color: #c084fc !important;
+body.theme-cyber .options label:hover,
+body.theme-cyber .options-grid label:hover,
+body.theme-cyber .option-label:hover {
+  background: #1e1e42 !important;
+  border-color: #10b981 !important;
+}
+body.theme-cyber .options label:has(input[type="radio"]:checked),
+body.theme-cyber .options-grid label:has(input[type="radio"]:checked),
+body.theme-cyber .option-label:has(input[type="radio"]:checked),
+body.theme-cyber .option-label.selected {
+  background: rgba(16, 185, 129, 0.22) !important;
+  border-color: #10b981 !important;
+  color: #6ee7b7 !important;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.35) !important;
+}
+body.theme-cyber .options input[type="radio"],
+body.theme-cyber .options-grid input[type="radio"],
+body.theme-cyber .option-label input[type="radio"] {
+  background: #0a0a1a !important;
+  border-color: #a855f7 !important;
 }
 body.theme-cyber header h1,
 body.theme-cyber h2,
@@ -836,14 +994,34 @@ body.dark .passage {
   border-color: rgba(255, 255, 255, 0.1) !important;
   color: #f1f5f9 !important;
 }
-body.dark .options label {
-  background: #1c2028 !important;
-  border-color: rgba(255, 255, 255, 0.06) !important;
+body.dark .options label,
+body.dark .options-grid label,
+body.dark .option-label {
+  background: #181b22 !important;
+  border-color: rgba(255, 255, 255, 0.09) !important;
   color: #f1f5f9 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
 }
-body.dark .options label:hover {
-  background: #282e3a !important;
-  border-color: #3b82f6 !important;
+body.dark .options label:hover,
+body.dark .options-grid label:hover,
+body.dark .option-label:hover {
+  background: #202530 !important;
+  border-color: #10b981 !important;
+}
+body.dark .options label:has(input[type="radio"]:checked),
+body.dark .options-grid label:has(input[type="radio"]:checked),
+body.dark .option-label:has(input[type="radio"]:checked),
+body.dark .option-label.selected {
+  background: rgba(16, 185, 129, 0.18) !important;
+  border-color: #10b981 !important;
+  color: #6ee7b7 !important;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.3) !important;
+}
+body.dark .options input[type="radio"],
+body.dark .options-grid input[type="radio"],
+body.dark .option-label input[type="radio"] {
+  background: #111318 !important;
+  border-color: #475569 !important;
 }
 body.dark header h1,
 body.dark h2,
